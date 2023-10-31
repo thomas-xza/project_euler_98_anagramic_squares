@@ -5,7 +5,7 @@
 #define INT_SIZE  uint
 
 int
-binary_search_for_n(INT_SIZE n, INT_SIZE *array_pt, int len, char return_pos_always, char *above_this);
+binary_search_for_n(INT_SIZE n, INT_SIZE *set_pt, int len, char return_pos_always, char *above_this);
 
 /*
   `len` is quantity of all values, not position of last value.
@@ -17,7 +17,7 @@ binary_search_for_n(INT_SIZE n, INT_SIZE *array_pt, int len, char return_pos_alw
   closest match, or -1 if not found.
 
   `above_this` is related to above - return position of closest match
-  above or below the target to search for.
+  above or below the target to search for - NOTE IT MUST BE A POINTER.
 */
   
 
@@ -38,6 +38,18 @@ binary_search_for_n(INT_SIZE n, INT_SIZE *set_pt, int len, char return_pos_alway
 
   while (1) {
 
+    printf("lower_bound %d\n", lower_bound);
+  
+    printf("upper_bound %d\n", upper_bound);
+
+    printf("focus %d\n", focus);
+  
+    printf("focus_above %d\n", focus_above);
+  
+    printf("n %d\n", n);
+
+    printf("\n\n");
+  
     if ( focus == n ) {
 
       *above_this = 0;
@@ -45,6 +57,8 @@ binary_search_for_n(INT_SIZE n, INT_SIZE *set_pt, int len, char return_pos_alway
       return mid_pos;
 
     } else if ( focus_above == n ) {
+
+      printf("focus_above == n\n");
 
       *above_this = 0;
 

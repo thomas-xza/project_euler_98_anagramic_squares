@@ -57,11 +57,11 @@ main() {
 void
 attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
-  uint line_n, n, pos;
+  int64 line_n, n, pos, above_this;
 
   int8 line[10] = {0};
 
-  for ( line_n = 10014 ; line_n < 362879 ; line_n++ ) {
+  for ( line_n = 10013 ; line_n < 362879 ; line_n++ ) {
     
     memset(line, 0, sizeof(line));
 
@@ -71,7 +71,7 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
     printf("%d\n", n);
 
-    pos = binary_search_for_n(n, squares_pt, 31623, 0, 0);
+    pos = binary_search_for_n(n, squares_pt, 31623, 0, &above_this);
 
     if ( pos != -1 ) {
 
