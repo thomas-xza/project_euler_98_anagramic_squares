@@ -12,6 +12,9 @@
 #define LINES  1786
 
 void
+setup_data(int8 *total_char_count, int8 *alpha_char_count);
+
+void
 char_count(int8 *line, int8 *total_char_count, int8 *alpha_char_count, int line_n);
 
 void
@@ -24,6 +27,13 @@ main() {
 
   int8 alpha_char_count[LINES * 26] = {0};
 
+  setup_data(&total_char_count[0], &alpha_char_count[0]);
+
+}
+
+void
+setup_data(int8 *total_char_count, int8 *alpha_char_count) {
+
   int8 line[16] = {0};
 
   int line_n;
@@ -32,13 +42,11 @@ main() {
 
     file_line_to_int_8_array(&line[0], "98_words.txt", line_n);
 
-    char_count(&line[0], &total_char_count[line_n], &alpha_char_count[line_n * 26], line_n);
+    char_count(&line[0], (total_char_count), (alpha_char_count + line_n * 26), line_n);
 
-    printf("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n");
+    print_char_count_quantities((alpha_char_count + line_n * 26));
 
-    print_char_count_quantities(&alpha_char_count[line_n * 26]);
-
-    printf("  %s \n\n", line);
+    printf("  %d  %s \n\n", total_char_count[line_n], line);
 
     memset(line, 0, sizeof(line));
 
@@ -50,6 +58,8 @@ void
 print_char_count_quantities(int8 *alpha_char_count) {
 
   int8 i;
+
+  printf("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n");
 
   for ( i = 0 ; i < 26 ; i++ ) {
 
