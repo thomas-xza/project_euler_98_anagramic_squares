@@ -64,12 +64,8 @@ find_anagrams(int8 *total_char_count, int8 *alpha_char_count) {
 
       if ( anagram_chk == 1 ) {
 
-	printf("%d %d\n", *(total_char_count + i), *(total_char_count + j));
-      
 	anagram_pair = \
 	  compare_char_counts(alpha_char_count + i * 26, alpha_char_count + j * 26);
-
-	/* print_char_count_quantities */
 
       }
 
@@ -78,6 +74,12 @@ find_anagrams(int8 *total_char_count, int8 *alpha_char_count) {
 	memset(line_a, 0, sizeof(line_a));
 
 	memset(line_b, 0, sizeof(line_b));
+
+	printf("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n");
+
+	print_char_count_quantities(alpha_char_count + i * 26);
+
+	print_char_count_quantities(alpha_char_count + j * 26);
 
 	file_line_to_int_8_array(&line_a[0], "98_words.txt", i);	
 
@@ -98,11 +100,11 @@ compare_char_counts(int8 *char_count_a, int8 *char_count_b) {
 
   int8 i;
 
-  print_char_count_quantities(char_count_a);
+  /* print_char_count_quantities(char_count_a); */
 
-  print_char_count_quantities(char_count_b);
+  /* print_char_count_quantities(char_count_b); */
 
-  for ( i = 0 ; i < 16 ; i++ ) {
+  for ( i = 0 ; i < 26 ; i++ ) {
 
     if ( *(char_count_a + i) != *(char_count_b + i) ) {
 
@@ -129,7 +131,7 @@ setup_data(int8 *total_char_count, int8 *alpha_char_count) {
 
     char_count(&line[0], total_char_count + line_n, alpha_char_count + line_n * 26, line_n);
 
-    print_char_count_quantities((alpha_char_count + line_n * 26));
+    /* print_char_count_quantities((alpha_char_count + line_n * 26)); */
 
     /* printf("  %d  %s \n\n", total_char_count[line_n], line); */
 
@@ -148,9 +150,11 @@ print_char_count_quantities(int8 *alpha_char_count) {
 
   for ( i = 0 ; i < 26 ; i++ ) {
 
-    /* printf("%d ", *(alpha_char_count + i)); */
+    printf("%d ", *(alpha_char_count + i));
 
   }
+
+  printf("\n");
 
 }
 
