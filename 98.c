@@ -27,7 +27,7 @@ int8
 compare_char_counts(int8 *char_count_a, int8 *char_count_b);
 
 void
-gen_squares(int *squares, int max_n);
+gen_squares(int *squares, int max);
 
 void
 main() {
@@ -38,20 +38,34 @@ main() {
 
   int anagram_pairs[128] = {0};
 
-  int squares[0] = {0};
+  int squares[605] = {0};
 
   setup_data(&total_char_count[0], &alpha_char_count[0]);
 
   find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]);
 
-  gen_squares(&squares[0], 362880);
+  gen_squares(&squares[0], 605);
 
 }
 
 void
-gen_squares(int *squares, int max_n) {
+gen_squares(int *squares, int max) {
 
-  
+  int n = 1;
+
+  uint n_sq = n * n;
+
+  while ( n < max ) {
+
+    squares[n] = n_sq;
+
+    printf("%d  %d\n", n, n_sq);
+
+    n += 1;
+
+    n_sq = n * n;
+
+  }
 
 }
 
