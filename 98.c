@@ -63,6 +63,8 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
   int8 line[10] = {0};
 
+  uint permutations[];
+
   for ( line_n = 10013 ; line_n < 362879 ; line_n++ ) {
     
     memset(line, 0, sizeof(line));
