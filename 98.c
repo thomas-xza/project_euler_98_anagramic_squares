@@ -1,4 +1,3 @@
-#include <gmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,12 +14,15 @@
 void
 char_count(int8 *line, int8 *total_char_count, int8 *alpha_char_count, int line_n);
 
-int8 alpha_char_count[LINES * 26] = {0};
-
-int8 total_char_count[LINES] = {0};
+void
+print_char_count_quantities(int8 *alpha_char_count);
 
 void
 main() {
+
+  int8 total_char_count[LINES] = {0};
+
+  int8 alpha_char_count[LINES * 26] = {0};
 
   int8 line[16] = {0};
 
@@ -30,16 +32,31 @@ main() {
 
     file_line_to_int_8_array(&line[0], "98_words.txt", line_n);
 
-    char_count(&line[0], &total_char_count[line_n], &alpha_char_count[line_n * 28], line_n);
+    char_count(&line[0], &total_char_count[line_n], &alpha_char_count[line_n * 26], line_n);
 
-    /* printf("%d  %s \n", total_char_count[line_n], line); */
+    printf("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n");
 
-    printf("  %s \n", line);
+    print_char_count_quantities(&alpha_char_count[line_n * 26]);
+
+    printf("  %s \n\n", line);
 
     memset(line, 0, sizeof(line));
 
   }
   
+}
+
+void
+print_char_count_quantities(int8 *alpha_char_count) {
+
+  int8 i;
+
+  for ( i = 0 ; i < 26 ; i++ ) {
+
+    printf("%d ", *(alpha_char_count + i));
+
+  }
+
 }
 
 void
@@ -53,13 +70,13 @@ char_count(int8 *line, int8 *total_char_count, int8 *alpha_char_count, int line_
 
     if ( (*(line + i) >= 65) &&(*(line + i) <= 90) ) {
 
-      letter = *(line + i) - 64;
-
       *(total_char_count) += 1;
 
-      printf("%02d  ", letter);
+      letter = *(line + i) - 65;
 
-      /* *(alpha_char_count + letter) += 1; */
+      /* printf("%02d  ", letter); */
+
+      *(alpha_char_count + letter) += 1;
 
     }
 
