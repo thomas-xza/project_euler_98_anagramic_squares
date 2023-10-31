@@ -44,24 +44,24 @@ main() {
 
   uint squares[31623] = {0};
 
-  setup_data(&total_char_count[0], &alpha_char_count[0]);
+  /* setup_data(&total_char_count[0], &alpha_char_count[0]); */
 
-  find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]);
+  /* find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]); */
 
   gen_squares(&squares[0], 31623);
 
-  attempt_permutations("9_unique_digit_permuations.tx", squares[0]);
+  attempt_permutations("9_unique_digit_permutations.tx", &squares[0]);
 
 }
 
 void
 attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
-  uint line_n, n;
+  uint line_n, n, pos;
 
   int8 line[10] = {0};
 
-  for ( line_n = 0 ; line_n < 362880 ; line_n++ ) {
+  for ( line_n = 10014 ; line_n < 362879 ; line_n++ ) {
     
     memset(line, 0, sizeof(line));
 
@@ -69,11 +69,13 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
     n = atoi(&line[0]);
 
-    result = binary_search_for_n(n, squares_pt, 31623, 0, 0);
+    printf("%d\n", n);
 
-    if ( result == -1 ) {
+    pos = binary_search_for_n(n, squares_pt, 31623, 0, 0);
 
-      
+    if ( pos != -1 ) {
+
+      printf("%d", n);
 
     }
 
@@ -92,7 +94,7 @@ gen_squares(int *squares, int max) {
 
     squares[n] = n_sq;
 
-    printf("%d  %d\n", n, n_sq);
+    /* printf("%d  %d\n", n, n_sq); */
 
     n += 1;
 
