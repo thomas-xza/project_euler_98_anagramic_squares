@@ -80,4 +80,20 @@ THROW WORTH
 
 ----
 
-The next step is to generate all the primes
+Once the squares < 362880 are generated, and the anagrams are found,
+how to match the two together?
+
+There are x possible combinations of 1-digit unique numbers, where:
+
+x = 9! + 8! + 7! + 6! + 5! + 4! + 3! + 2! + 1!
+x = 362880 + 40320 + 5040 + 720 + 120 + 24 + 6 + 2
+x = 409112
+
+If I could write a permutation generator that works for different
+lengths -- that would allow them to be looked up within pre-generated
+squares. I have actually written one before, both in Go and C, so,
+will use that then load the permutations from a file.
+
+The challenge question is about finding the largest square number
+formed by such as pair, so, potentially only need to focus on 9-digit
+numbers?

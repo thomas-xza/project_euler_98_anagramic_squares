@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "./lib/file-line-to-int8-array.c"
+#include "./lib/binary-search-for-n.c"
 
 #define int8   char
 #define sint8  signed char
@@ -30,6 +31,9 @@ void
 gen_squares(int *squares, int max);
 
 void
+attempt_permutations(int8 *filename_pt, int *squares_pt);
+
+void
 main() {
 
   int8 total_char_count[LINES] = {0};
@@ -38,13 +42,42 @@ main() {
 
   int anagram_pairs[128] = {0};
 
-  int squares[605] = {0};
+  uint squares[31623] = {0};
 
   setup_data(&total_char_count[0], &alpha_char_count[0]);
 
   find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]);
 
-  gen_squares(&squares[0], 605);
+  gen_squares(&squares[0], 31623);
+
+  attempt_permutations("9_unique_digit_permuations.tx", squares[0]);
+
+}
+
+void
+attempt_permutations(int8 *filename_pt, int *squares_pt) {
+
+  uint line_n, n;
+
+  int8 line[10] = {0};
+
+  for ( line_n = 0 ; line_n < 362880 ; line_n++ ) {
+    
+    memset(line, 0, sizeof(line));
+
+    file_line_to_int_8_array(&line[0], filename_pt, line_n);
+
+    n = atoi(&line[0]);
+
+    result = binary_search_for_n(n, squares_pt, 31623, 0, 0);
+
+    if ( result == -1 ) {
+
+      
+
+    }
+
+  }
 
 }
 
@@ -129,10 +162,6 @@ int8
 compare_char_counts(int8 *char_count_a, int8 *char_count_b) {
 
   int8 i;
-
-  /* print_char_count_quantities(char_count_a); */
-
-  /* print_char_count_quantities(char_count_b); */
 
   for ( i = 0 ; i < 26 ; i++ ) {
 
