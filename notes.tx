@@ -97,5 +97,9 @@ Fortunately INTRODUCE/REDUCTION are 9 digits, so perhaps find all the
 square numbers within that, then try and match those found to the
 anagram pair.
 
+OK after checking all 9-digit permutations, it seems there is none
+that is a square number, so no pairs exist.
+There are now significantly less possibilities.
+
 ----
 

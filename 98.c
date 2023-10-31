@@ -57,7 +57,9 @@ main() {
 void
 attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
-  int64 line_n, n, pos, above_this;
+  uint line_n, n, pos;
+
+  int8 above_this;
 
   int8 line[10] = {0};
 
@@ -69,7 +71,7 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
     n = atoi(&line[0]);
 
-    printf("%d\n", n);
+    /* printf("%d\n", n); */
 
     pos = binary_search_for_n(n, squares_pt, 31623, 0, &above_this);
 

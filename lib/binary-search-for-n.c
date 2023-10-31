@@ -38,17 +38,17 @@ binary_search_for_n(INT_SIZE n, INT_SIZE *set_pt, int len, char return_pos_alway
 
   while (1) {
 
-    printf("lower_bound %d\n", lower_bound);
+    /* printf("lower_bound %d\n", lower_bound); */
   
-    printf("upper_bound %d\n", upper_bound);
+    /* printf("upper_bound %d\n", upper_bound); */
 
-    printf("focus %d\n", focus);
+    /* printf("focus %d\n", focus); */
   
-    printf("focus_above %d\n", focus_above);
+    /* printf("focus_above %d\n", focus_above); */
   
-    printf("n %d\n", n);
+    /* printf("n %d\n", n); */
 
-    printf("\n\n");
+    /* printf("\n\n"); */
   
     if ( focus == n ) {
 
@@ -58,7 +58,7 @@ binary_search_for_n(INT_SIZE n, INT_SIZE *set_pt, int len, char return_pos_alway
 
     } else if ( focus_above == n ) {
 
-      printf("focus_above == n\n");
+      /* printf("focus_above == n\n"); */
 
       *above_this = 0;
 
