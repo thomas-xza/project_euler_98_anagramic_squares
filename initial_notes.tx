@@ -11,8 +11,7 @@ RESPO NSIBI LITY       =>     RESPONIBLTY      11 unique
 
 Something unclear in the challenge, is what limits there are on the
 replacements within a word - e.g. can a letter be replaced by a
-double-digit? Presumably the words which are anagrams have a max of 9
-unique letters, but this is to be investigated.
+double-digit? If yes, there could technically be infinite?
 
 9! = 362880
 Easy to find all the squares up to this number.
@@ -22,15 +21,12 @@ Easy to find all the squares up to this number.
 Idea: find all anagrams, by counting the quantity of alphabetical
 chars, within an array. Words themselves do not need to be stored.
 
-int8 big_array[1786 * 28]
+int8 quantity_of_each_alpha_char[1786 * 26]
+[ <quantity of A>, <quantity of B>, <quantity of C>, ... ]
+1786 * 26 * 8 / 1024 = ~350mb
 
-1786 * 28 * 8 / 1024 = ~391mb
+int8 quantity_of_total_chars[1786]
+[ <word length of line 1, word length of line 2, ... ]
 
-Byte storage:
-
-[ <file line n>,
-  <total quantity of chars>,
-  <quantity of A>, <quantity of B>, <quantity of C>, ... ]
-
-
+----
 
