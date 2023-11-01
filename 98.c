@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "./lib/file-line-to-int8-array.c"
 #include "./lib/sequential-search-for-n.c"
 #include "./lib/binary-search-for-n.c"
@@ -94,33 +95,36 @@ fit_anagram_to_candidates(uint *squares_pt, int *anagram_pairs_pt) {
 void
 seek_potential_word_fits(int8 *word_a, int8 *word_b, uint *squares_pt) {
 
-  int i, j;
+  int i, j, min_sq, max_sq, lower_sq_pos, upper_sq_pos, subset_size, sq_a, sq_b;
 
-  int8 line[10] = {0};
-
-  int8 len_a, len_b, word_a_len, word_b_len;
+  int8 word_a_len, word_b_len, above_this;
 
   word_a_len = strlen(word_a);
 
   word_b_len = strlen(word_b);
 
-  for (i = 0 ; i < 31624 - 1 ; i++ ) {
+  min_sq = pow(10,word_a_len - 1);
 
-    sprintf(line, "%d", *(squares_pt + i));
+  max_sq = min_sq * 10;
 
-    len_a = strlen(line);
+  lower_sq_pos = binary_search_for_n(min_sq, squares_pt, 31624, 1, &above_this);
 
-    for (j = i + 1 ; j  < 31624 ; j++ ) {
+  upper_sq_pos = binary_search_for_n(max_sq, squares_pt, 31624, 2, &above_this);
 
+  subset_size = upper_sq_pos - lower_sq_pos;
 
-      /* if ( strlen(word_a) == strlen() && strlen(word_a) == strlen(sprintf(&line[0], "%d", *(squares_pt + j))) ) { */
-	
-	/* printf("%d %d\n", *(squares_pt + i), *(squares_pt + j)); */
+  /* printf(" %d %d  %d  %d\n", min_sq, max_sq, lower_sq_pos, upper_sq_pos); */
+
+  for (i = 0 ; i < subset_size - 1 ; i++ ) {
+
+    sq_a = *(squares_pt + lower_sq_pos + i);
+
+    for (j = i + 1 ; j < subset_size ; j++ ) {
+
+      sq_b = *(squares_pt + lower_sq_pos + j);
+
+      assess_fit(sq_a, sq_b, word_a, word_b);
       
-
-      /* } */
-
-
     }
 
   }
@@ -141,8 +145,6 @@ assess_fit(int number_a, int number_b, int8 *word_a, int8 *word_b) {
 
   sprintf(n_str_b, "%d", number_b);
 
-  /* printf("%s %s\n", n_str_a, n_str_b); */
-
   for ( pos_a = 0 ; n_str_a[pos_a] != '\0' ; pos_a++ ) {
 
     letter_a = *(word_a + pos_a);
@@ -153,8 +155,8 @@ assess_fit(int number_a, int number_b, int8 *word_a, int8 *word_b) {
 
     digit_b = n_str_b[pos_b];
 
-    printf("%c : %c, %c\n", letter_a, digit_a, digit_b);
-
+    /* printf("%c : %c, %c\n", letter_a, digit_a, digit_b); */
+    
     if ( digit_a != digit_b ) {
 
       return -1;
@@ -162,6 +164,8 @@ assess_fit(int number_a, int number_b, int8 *word_a, int8 *word_b) {
     }
 
   }
+
+  printf("%s %s\n", n_str_a, n_str_b);
 
   return 1;
 
