@@ -78,7 +78,7 @@ fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
 
   int n, permutation_a, permutation_b;
 
-  int8 quantity_of_permutations = 2;
+  int8 quantity_of_permutations = 30;
 
   for ( line_n = 0 ; line_n < quantity_of_permutations ; line_n++ ) {
 
@@ -92,9 +92,7 @@ fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
 
   for ( i = 0 ; i < quantity_of_permutations - 1 ; i++ ) {
 
-    j = i + 1;
-
-    for ( j = 0 ; j < quantity_of_permutations ; j++ ) {
+    for ( j = i + 1 ; j < quantity_of_permutations ; j++ ) {
 
       printf("testing: %d %d  %s %s\n",
 	     permutations_subset[i], permutations_subset[j],
@@ -140,8 +138,6 @@ assess_fit(int permutation_a, int permutation_b, int8 *word_a, int8 *word_b) {
     digit_b = perm_str_b[pos_b];
 
     printf("%c : %c, %c\n", letter_a, digit_a, digit_b);
-
-    /* printf("%d vs %d\n", letter_a, digit_a); */
 
     if ( digit_a != digit_b ) {
 
