@@ -20,7 +20,7 @@ main() {
 
   char char_range[64] = "123456789";
 
-  char perm_init[32] = "123456789";
+  char perm_init[32] = "12345678";
 
   char perm[32];
 

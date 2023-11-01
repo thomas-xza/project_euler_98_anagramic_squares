@@ -85,11 +85,7 @@ how to match the two together?
 
 There are x possible combinations of 1-digit unique numbers, where:
 
-x = 9! + 8! + 7! + 6! + 5! + 4! + 3! + 2! + 1!
-x = 362880 + 40320 + 5040 + 720 + 120 + 24 + 6 + 2
-x = 409112
-
-However, the maximum number to check if square would be:
+The maximum number to check if square would be:
 987654321 = ~1,000,000,000
 31623 ^ 2 =  1,000,014,129
 
@@ -97,14 +93,12 @@ Fortunately INTRODUCE & REDUCTION are 9 digits, so perhaps find all
 the square numbers within that, then try and match those found to the
 anagram pair.
 
-OK after checking all 9-digit permutations, it seems there is none
-that is a square number, so no pairs exist.
-There are now significantly less possibilities.
-
 ----
 
 I N T R O D U C E
 R E D U C T I O N
+
+Sample data...
 
 1 3 9 8 5 4 2 7 6  @ 11826
 1 5 2 8 4 3 7 6 9  @ 12363
