@@ -35,8 +35,13 @@ void
 attempt_permutations(int8 *filename_pt, uint *squares_pt);
 
 void
-fit_anagrams_to_candidates(int8 *filename_pt, int *anagram_pairs);
+fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b);
 
+int8
+assess_fit(int permutation_a, int permutation_b, int8 *word_a, int8 *word_b);
+
+int8
+find_letter_in_string(int8 letter_a, int8 *string);
 
 void
 main() {
@@ -49,15 +54,13 @@ main() {
 
   uint squares[31624] = {0};
 
-  uint candidates[128] = {0}
-
   /* setup_data(&total_char_count[0], &alpha_char_count[0]); */
 
   /* find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]); */
 
   gen_squares(&squares[0], 31623);
 
-  attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]);
+  /* attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]); */
 
   fit_anagram_to_candidates("9_unique_digit_candidates.tx", "INTRODUCE", "REDUCTION");
 
@@ -65,17 +68,19 @@ main() {
 
 
 void
-fit_anagrams_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
+fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
 
-  int8 i, j, line_n;
+  int8 i, j, line_n, result;
 
   int8 line[10] = {0};
 
   int permutations_subset[64] = {0};
 
-  int n;
+  int n, permutation_a, permutation_b;
 
-  for ( line_n = 0 ; line_n < 10 ; line_n++ ) {
+  int8 quantity_of_permutations = 2;
+
+  for ( line_n = 0 ; line_n < quantity_of_permutations ; line_n++ ) {
 
     file_line_to_int_8_array(&line[0], filename_pt, line_n);
 
@@ -83,9 +88,92 @@ fit_anagrams_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
 
     permutations_subset[line_n] = n * n;
 
-    printf("%d ** 2 = %d\n", n, permutations_subset[line_n]);
+  }
+
+  for ( i = 0 ; i < quantity_of_permutations - 1 ; i++ ) {
+
+    j = i + 1;
+
+    for ( j = 0 ; j < quantity_of_permutations ; j++ ) {
+
+      printf("testing: %d %d  %s %s\n",
+	     permutations_subset[i], permutations_subset[j],
+	     word_a, word_b);
+	
+      result = assess_fit(permutations_subset[i], permutations_subset[j],
+			  word_a, word_b);
+
+
+      if ( result == 1 ) {
+
+      }
+
+    }
 
   }
+
+}
+
+int8
+assess_fit(int permutation_a, int permutation_b, int8 *word_a, int8 *word_b) {
+
+  int8 letter_a, letter_b, digit_a, digit_b, pos_a, pos_b = 0;
+
+  int8 perm_str_a[10], perm_str_b[10] = {0};
+
+  int8 cont = 1;
+
+  sprintf(perm_str_a, "%d", permutation_a);
+
+  sprintf(perm_str_b, "%d", permutation_b);
+
+  /* printf("%s %s\n", perm_str_a, perm_str_b); */
+
+  for ( pos_a = 0 ; perm_str_a[pos_a] != '\0' ; pos_a++ ) {
+
+    letter_a = *(word_a + pos_a);
+
+    digit_a = perm_str_a[pos_a];
+
+    pos_b = find_letter_in_string(letter_a, word_b);
+
+    digit_b = perm_str_b[pos_b];
+
+    printf("%c : %c, %c\n", letter_a, digit_a, digit_b);
+
+    /* printf("%d vs %d\n", letter_a, digit_a); */
+
+    if ( digit_a != digit_b ) {
+
+      return -1;
+
+    }
+
+  }
+
+  return 1;
+
+}
+
+
+int8
+find_letter_in_string(int8 letter_a, int8 *string) {
+
+  int8 i;
+
+  for ( i = 0 ; *(string + i) != '\0' ; i++ ) {
+
+    /* printf("find_letter_in_string() %c in %c\n", letter_a, *(string + i)); */
+
+    if ( *(string + i) == letter_a ) {
+
+      return i;
+
+    }
+
+  }
+
+  return -1;
 
 }
 

@@ -116,7 +116,7 @@ R E D U C T I O N
 3 6 1 8 7 4 5 2 9  @ 19023
 
 The algorithm would work as follows:
-- Select 2 numbers using combinatorial iteration (not permutations)
+- Select 2 numbers using combinatorial iteration
 - Select 1st letter from INTRODUCE, find position of digit in 1st number
 - Select same letter from REDUCTION, find position of digit in 2nd number
 - Compare digits, if true continue, else return fail
