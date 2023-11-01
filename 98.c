@@ -32,9 +32,6 @@ void
 gen_squares(int *squares, int max);
 
 void
-attempt_permutations(int8 *filename_pt, uint *squares_pt);
-
-void
 fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b);
 
 int8
@@ -59,8 +56,6 @@ main() {
   /* find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]); */
 
   gen_squares(&squares[0], 31623);
-
-  /* attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]); */
 
   fit_anagram_to_candidates("9_unique_digit_candidates.tx", "INTRODUCE", "REDUCTION");
 
@@ -172,39 +167,6 @@ find_letter_in_string(int8 letter_a, int8 *string) {
   return -1;
 
 }
-
-
-void
-attempt_permutations(int8 *filename_pt, uint *squares_pt) {
-
-  uint line_n, n;
-
-  int8 line[10] = {0};
-
-  int pos = 1;
-
-  int8 found = 0;
-
-  for ( line_n = 0 ; line_n < 362879 ; line_n++ ) {
-    
-    memset(line, 0, sizeof(line));
-
-    file_line_to_int_8_array(&line[0], filename_pt, line_n);
-
-    n = atoi(&line[0]);
-
-    pos = sequential_search_for_n(n, squares_pt, pos, &found);
-
-    if ( found == 1 ) {
-
-      printf("%d @ %d\n", n, pos);
-
-    }
-
-  }
-
-}
-
 
 void
 gen_squares(int *squares, int max) {
