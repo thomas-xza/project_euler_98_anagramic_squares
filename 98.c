@@ -51,13 +51,7 @@ main() {
 
   gen_squares(&squares[0], 31623);
 
-  for ( int i = 0 ; i < 31624 ; i++ ) {
-
-    printf("%d\n", squares[i]);
-
-  }
-
-  /* attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]); */
+  attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]);
 
 }
 
@@ -68,9 +62,11 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
   int8 line[10] = {0};
 
-  int pos = 0;
+  int pos = 1;
 
-  for ( line_n = 0 ; line_n < 32 ; line_n++ ) {
+  int8 found = 0;
+
+  for ( line_n = 0 ; line_n < 362879 ; line_n++ ) {
     
     memset(line, 0, sizeof(line));
 
@@ -78,13 +74,11 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
     n = atoi(&line[0]);
 
-    pos = sequential_search_for_n(n, squares_pt, pos);
+    pos = sequential_search_for_n(n, squares_pt, pos, &found);
 
-    printf("%d @ %d\n", n, pos);
+    if ( found == 1 ) {
 
-    if ( pos != -1 ) {
-
-      /* printf("%d\n", n); */
+      printf("%d @ %d\n", n, pos);
 
     }
 
@@ -101,7 +95,7 @@ gen_squares(int *squares, int max) {
 
   while ( n < max ) {
 
-    *(squares + n - 1) = n_sq;
+    *(squares + n) = n_sq;
 
     n += 1;
 

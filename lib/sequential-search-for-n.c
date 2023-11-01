@@ -3,13 +3,13 @@
 #define uint64 unsigned long long int
 
 int
-sequential_search_for_n(int n, uint *set_pt, int init_pos);
+sequential_search_for_n(int n, uint *set_pt, int init_pos, char *found);
 
 int
 sequential_search_for_n_int_64(uint64 n, uint64 *set_pt, int init_pos);
 
 int
-sequential_search_for_n(int n, uint *set_pt, int init_pos) {
+sequential_search_for_n(int n, uint *set_pt, int init_pos, char *found) {
 
   /*  If iterating through a sequential set of values, then init_pos
       should be position within set[] of last found n.
@@ -26,6 +26,8 @@ sequential_search_for_n(int n, uint *set_pt, int init_pos) {
     if ( n == *set_pt ) {
 
       /*  If found, return the position of this n.  */
+
+      *found = 1;
 	
       return i;
 
@@ -37,6 +39,8 @@ sequential_search_for_n(int n, uint *set_pt, int init_pos) {
 	  value in the set is larger than n, then n cannot be in
 	  the set.  Return the position 1 before the set values
 	  are larger.   */
+
+      *found = 0;
 	
       return i - 1;
 
@@ -50,6 +54,8 @@ sequential_search_for_n(int n, uint *set_pt, int init_pos) {
     set_pt++;
 
   }
+
+  *found = 0;
 
   return -1;
 
