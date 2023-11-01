@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "./lib/file-line-to-int8-array.c"
-#include "./lib/binary-search-for-n.c"
+#include "./lib/sequential-search-for-n.c"
+/* #include "./lib/binary-search-for-n.c" */
 
 #define int8   char
 #define sint8  signed char
@@ -42,7 +43,7 @@ main() {
 
   int anagram_pairs[128] = {0};
 
-  uint squares[31623] = {0};
+  uint squares[31624] = {0};
 
   /* setup_data(&total_char_count[0], &alpha_char_count[0]); */
 
@@ -50,22 +51,26 @@ main() {
 
   gen_squares(&squares[0], 31623);
 
-  attempt_permutations("9_unique_digit_permutations.tx", &squares[0]);
+  for ( int i = 0 ; i < 31624 ; i++ ) {
+
+    printf("%d\n", squares[i]);
+
+  }
+
+  /* attempt_permutations("tmpfs/9_unique_digit_permutations.tx", &squares[0]); */
 
 }
 
 void
 attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
-  uint line_n, n, pos;
-
-  int8 above_this;
+  uint line_n, n;
 
   int8 line[10] = {0};
 
-  uint permutations[];
+  int pos = 0;
 
-  for ( line_n = 10013 ; line_n < 362879 ; line_n++ ) {
+  for ( line_n = 0 ; line_n < 32 ; line_n++ ) {
     
     memset(line, 0, sizeof(line));
 
@@ -73,13 +78,13 @@ attempt_permutations(int8 *filename_pt, int *squares_pt) {
 
     n = atoi(&line[0]);
 
-    /* printf("%d\n", n); */
+    pos = sequential_search_for_n(n, squares_pt, pos);
 
-    pos = binary_search_for_n(n, squares_pt, 31623, 0, &above_this);
+    printf("%d @ %d\n", n, pos);
 
     if ( pos != -1 ) {
 
-      printf("%d", n);
+      /* printf("%d\n", n); */
 
     }
 
@@ -96,9 +101,7 @@ gen_squares(int *squares, int max) {
 
   while ( n < max ) {
 
-    squares[n] = n_sq;
-
-    /* printf("%d  %d\n", n, n_sq); */
+    *(squares + n - 1) = n_sq;
 
     n += 1;
 
