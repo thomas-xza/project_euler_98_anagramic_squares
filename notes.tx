@@ -109,7 +109,7 @@ Sample data...
 3 2 6 5 9 7 1 8 4  @ 18072
 3 6 1 8 7 4 5 2 9  @ 19023
 
-The algorithm would work as follows:
+The micro algorithm would work as follows:
 - Select 2 numbers using combinatorial iteration
 - Select 1st letter from INTRODUCE, find position of digit in 1st number
 - Select same letter from REDUCTION, find position of digit in 2nd number

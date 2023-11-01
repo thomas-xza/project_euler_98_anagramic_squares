@@ -3,7 +3,7 @@
 #include <string.h>
 #include "./lib/file-line-to-int8-array.c"
 #include "./lib/sequential-search-for-n.c"
-/* #include "./lib/binary-search-for-n.c" */
+#include "./lib/binary-search-for-n.c"
 
 #define int8   char
 #define sint8  signed char
@@ -32,13 +32,16 @@ void
 gen_squares(int *squares, int max);
 
 void
-fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b);
+fit_anagram_to_candidates(uint *squares_pt, int *anagram_pairs_pt);
 
 int8
 assess_fit(int permutation_a, int permutation_b, int8 *word_a, int8 *word_b);
 
 int8
 find_letter_in_string(int8 letter_a, int8 *string);
+
+void
+seek_potential_word_fits(int8 *word_a, int8 *word_b, uint *squares_pt);
 
 void
 main() {
@@ -51,55 +54,72 @@ main() {
 
   uint squares[31624] = {0};
 
-  /* setup_data(&total_char_count[0], &alpha_char_count[0]); */
+  setup_data(&total_char_count[0], &alpha_char_count[0]);
 
-  /* find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]); */
+  find_anagrams(&total_char_count[0], &alpha_char_count[0], &anagram_pairs[0]);
 
   gen_squares(&squares[0], 31623);
 
-  fit_anagram_to_candidates("9_unique_digit_candidates.tx", "INTRODUCE", "REDUCTION");
+  fit_anagram_to_candidates(&squares[0], &anagram_pairs[0]);
 
 }
 
 
 void
-fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
+fit_anagram_to_candidates(uint *squares_pt, int *anagram_pairs_pt) {
 
-  int8 i, j, line_n, result;
+  int8 word_a[10] = {0}, word_b[10] = {0};
+
+  int8 pair_selection;
+
+  for (pair_selection = 0; *(anagram_pairs_pt + pair_selection) != 0 ;
+       pair_selection += 2) {
+
+    file_line_to_int_8_array(&word_a[0], "98_words.txt", *(anagram_pairs_pt + pair_selection));
+  
+    file_line_to_int_8_array(&word_b[0], "98_words.txt", *(anagram_pairs_pt + pair_selection + 1));
+
+    printf("%s %s %d\n", word_a, word_b);
+
+    seek_potential_word_fits(&word_a[0], &word_b[0], squares_pt);
+  
+    memset(word_a, 0, sizeof(word_a));
+
+    memset(word_b, 0, sizeof(word_b));
+    
+  }
+
+}
+
+void
+seek_potential_word_fits(int8 *word_a, int8 *word_b, uint *squares_pt) {
+
+  int i, j;
 
   int8 line[10] = {0};
 
-  int permutations_subset[64] = {0};
+  int8 len_a, len_b, word_a_len, word_b_len;
 
-  int n, permutation_a, permutation_b;
+  word_a_len = strlen(word_a);
 
-  int8 quantity_of_permutations = 30;
+  word_b_len = strlen(word_b);
 
-  for ( line_n = 0 ; line_n < quantity_of_permutations ; line_n++ ) {
+  for (i = 0 ; i < 31624 - 1 ; i++ ) {
 
-    file_line_to_int_8_array(&line[0], filename_pt, line_n);
+    sprintf(line, "%d", *(squares_pt + i));
 
-    n = atoi(&line[0]);
+    len_a = strlen(line);
 
-    permutations_subset[line_n] = n * n;
+    for (j = i + 1 ; j  < 31624 ; j++ ) {
 
-  }
 
-  for ( i = 0 ; i < quantity_of_permutations - 1 ; i++ ) {
-
-    for ( j = i + 1 ; j < quantity_of_permutations ; j++ ) {
-
-      printf("testing: %d %d  %s %s\n",
-	     permutations_subset[i], permutations_subset[j],
-	     word_a, word_b);
+      /* if ( strlen(word_a) == strlen() && strlen(word_a) == strlen(sprintf(&line[0], "%d", *(squares_pt + j))) ) { */
 	
-      result = assess_fit(permutations_subset[i], permutations_subset[j],
-			  word_a, word_b);
+	/* printf("%d %d\n", *(squares_pt + i), *(squares_pt + j)); */
+      
 
+      /* } */
 
-      if ( result == 1 ) {
-
-      }
 
     }
 
@@ -107,30 +127,31 @@ fit_anagram_to_candidates(int8 *filename_pt, int8 *word_a, int8 *word_b) {
 
 }
 
+
 int8
-assess_fit(int permutation_a, int permutation_b, int8 *word_a, int8 *word_b) {
+assess_fit(int number_a, int number_b, int8 *word_a, int8 *word_b) {
 
   int8 letter_a, letter_b, digit_a, digit_b, pos_a, pos_b = 0;
 
-  int8 perm_str_a[10], perm_str_b[10] = {0};
+  int8 n_str_a[10], n_str_b[10] = {0};
 
   int8 cont = 1;
 
-  sprintf(perm_str_a, "%d", permutation_a);
+  sprintf(n_str_a, "%d", number_a);
 
-  sprintf(perm_str_b, "%d", permutation_b);
+  sprintf(n_str_b, "%d", number_b);
 
-  /* printf("%s %s\n", perm_str_a, perm_str_b); */
+  /* printf("%s %s\n", n_str_a, n_str_b); */
 
-  for ( pos_a = 0 ; perm_str_a[pos_a] != '\0' ; pos_a++ ) {
+  for ( pos_a = 0 ; n_str_a[pos_a] != '\0' ; pos_a++ ) {
 
     letter_a = *(word_a + pos_a);
 
-    digit_a = perm_str_a[pos_a];
+    digit_a = n_str_a[pos_a];
 
     pos_b = find_letter_in_string(letter_a, word_b);
 
-    digit_b = perm_str_b[pos_b];
+    digit_b = n_str_b[pos_b];
 
     printf("%c : %c, %c\n", letter_a, digit_a, digit_b);
 
@@ -230,7 +251,7 @@ find_anagrams(int8 *total_char_count, int8 *alpha_char_count, int *anagram_pairs
 
 	/* memset(line_b, 0, sizeof(line_b)); */
 
-	/* file_line_to_int_8_array(&line_a[0], "98_words.txt", i);	 */
+	/* file_line_to_int_8_array(&line_a[0], "98_words.txt", i); */
 
 	/* file_line_to_int_8_array(&line_b[0], "98_words.txt", j); */
 
