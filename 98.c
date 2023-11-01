@@ -3,7 +3,6 @@
 #include <string.h>
 #include <math.h>
 #include "./lib/file-line-to-int8-array.c"
-#include "./lib/sequential-search-for-n.c"
 #include "./lib/binary-search-for-n.c"
 
 #define int8   char
