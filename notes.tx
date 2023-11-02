@@ -115,3 +115,8 @@ The micro algorithm would work as follows:
 - Select same letter from REDUCTION, find position of digit in 2nd number
 - Compare digits, if true continue, else return fail
 - Select next letter, etc.
+
+----
+
+Algorithm within 98.c is now good enough to fish out answer by eye,
+after running it for a short period of time.
